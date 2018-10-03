@@ -6,6 +6,9 @@ ABF files are typically recorded with software like ClampEx and edited with soft
 
 Since comment tags are often used to store important experiment information, it is critical that the scientist maintain the ability to correct erroneous tag comments or tag times, and to add additional tags as analytical needs evolve.
 
+## Project Status
+This project is in early development / alpha stage. It is not yet intended to be downloaded or used.
+
 ## Features
 * ABF1 and ABF2 files are supported. 
 * An original ABF file backup is created automatically before an ABF is modified.
