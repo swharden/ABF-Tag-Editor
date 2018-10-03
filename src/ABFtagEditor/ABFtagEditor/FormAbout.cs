@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ABFtagEditor
 {
-    public partial class About : Form
+    public partial class FormAbout : Form
     {
-        public About()
+        public FormAbout()
         {
             InitializeComponent();
         }
