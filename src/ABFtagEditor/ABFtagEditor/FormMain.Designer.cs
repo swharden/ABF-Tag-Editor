@@ -45,26 +45,26 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnLaunch = new System.Windows.Forms.Button();
             this.btnBackup = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.tbComment = new System.Windows.Forms.TextBox();
+            this.nudMin = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.nudSec = new System.Windows.Forms.NumericUpDown();
+            this.nudSweep = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btnTagAdd = new System.Windows.Forms.Button();
+            this.btnTagDelete = new System.Windows.Forms.Button();
+            this.cbTags = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSec)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSweep)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -197,21 +197,21 @@
             this.btnBackup.Text = "Create Backup ABF";
             this.btnBackup.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // tbComment
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 75);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(452, 20);
-            this.textBox1.TabIndex = 0;
+            this.tbComment.Location = new System.Drawing.Point(6, 75);
+            this.tbComment.Name = "tbComment";
+            this.tbComment.Size = new System.Drawing.Size(452, 20);
+            this.tbComment.TabIndex = 0;
             // 
-            // numericUpDown1
+            // nudMin
             // 
-            this.numericUpDown1.DecimalPlaces = 2;
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 34);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(70, 20);
-            this.numericUpDown1.TabIndex = 0;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.nudMin.DecimalPlaces = 2;
+            this.nudMin.Location = new System.Drawing.Point(6, 34);
+            this.nudMin.Name = "nudMin";
+            this.nudMin.Size = new System.Drawing.Size(70, 20);
+            this.nudMin.TabIndex = 0;
+            this.nudMin.Value = new decimal(new int[] {
             612,
             0,
             0,
@@ -226,36 +226,36 @@
             this.label2.Text = "second:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // numericUpDown2
+            // nudSec
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(82, 34);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.nudSec.Location = new System.Drawing.Point(82, 34);
+            this.nudSec.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(70, 20);
-            this.numericUpDown2.TabIndex = 2;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.nudSec.Name = "nudSec";
+            this.nudSec.Size = new System.Drawing.Size(70, 20);
+            this.nudSec.TabIndex = 2;
+            this.nudSec.Value = new decimal(new int[] {
             367,
             0,
             0,
             0});
             // 
-            // numericUpDown3
+            // nudSweep
             // 
-            this.numericUpDown3.DecimalPlaces = 1;
-            this.numericUpDown3.Location = new System.Drawing.Point(158, 34);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.nudSweep.DecimalPlaces = 1;
+            this.nudSweep.Location = new System.Drawing.Point(158, 34);
+            this.nudSweep.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(70, 20);
-            this.numericUpDown3.TabIndex = 3;
-            this.numericUpDown3.Value = new decimal(new int[] {
+            this.nudSweep.Name = "nudSweep";
+            this.nudSweep.Size = new System.Drawing.Size(70, 20);
+            this.nudSweep.TabIndex = 3;
+            this.nudSweep.Value = new decimal(new int[] {
             237,
             0,
             0,
@@ -288,32 +288,35 @@
             this.label5.Text = "comment:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // button3
+            // btnTagAdd
             // 
-            this.button3.Location = new System.Drawing.Point(416, 18);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(42, 23);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Add";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnTagAdd.Enabled = false;
+            this.btnTagAdd.Location = new System.Drawing.Point(416, 18);
+            this.btnTagAdd.Name = "btnTagAdd";
+            this.btnTagAdd.Size = new System.Drawing.Size(42, 23);
+            this.btnTagAdd.TabIndex = 1;
+            this.btnTagAdd.Text = "Add";
+            this.btnTagAdd.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnTagDelete
             // 
-            this.button4.Location = new System.Drawing.Point(359, 18);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(51, 23);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "Delete";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnTagDelete.Enabled = false;
+            this.btnTagDelete.Location = new System.Drawing.Point(359, 18);
+            this.btnTagDelete.Name = "btnTagDelete";
+            this.btnTagDelete.Size = new System.Drawing.Size(51, 23);
+            this.btnTagDelete.TabIndex = 2;
+            this.btnTagDelete.Text = "Delete";
+            this.btnTagDelete.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cbTags
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 19);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(347, 21);
-            this.comboBox1.TabIndex = 7;
-            this.comboBox1.Text = "6.34 min - some drug added 200 nM";
+            this.cbTags.FormattingEnabled = true;
+            this.cbTags.Location = new System.Drawing.Point(6, 19);
+            this.cbTags.Name = "cbTags";
+            this.cbTags.Size = new System.Drawing.Size(347, 21);
+            this.cbTags.TabIndex = 7;
+            this.cbTags.Text = "6.34 min - some drug added 200 nM";
+            this.cbTags.SelectedIndexChanged += new System.EventHandler(this.cbTags_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -342,9 +345,9 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.comboBox1);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.cbTags);
+            this.groupBox2.Controls.Add(this.btnTagDelete);
+            this.groupBox2.Controls.Add(this.btnTagAdd);
             this.groupBox2.Location = new System.Drawing.Point(9, 103);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(464, 48);
@@ -354,14 +357,14 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.numericUpDown1);
-            this.groupBox3.Controls.Add(this.numericUpDown3);
+            this.groupBox3.Controls.Add(this.nudMin);
+            this.groupBox3.Controls.Add(this.nudSweep);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.numericUpDown2);
+            this.groupBox3.Controls.Add(this.nudSec);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.tbComment);
             this.groupBox3.Location = new System.Drawing.Point(9, 157);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(464, 102);
@@ -390,9 +393,9 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSec)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSweep)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -418,17 +421,17 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnBackup;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown nudSweep;
+        private System.Windows.Forms.NumericUpDown nudSec;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nudMin;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btnTagAdd;
+        private System.Windows.Forms.Button btnTagDelete;
+        private System.Windows.Forms.ComboBox cbTags;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;

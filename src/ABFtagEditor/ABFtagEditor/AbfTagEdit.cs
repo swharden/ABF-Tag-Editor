@@ -6,13 +6,25 @@ using System.Threading.Tasks;
 
 namespace ABFtagEditor
 {
-    class tag
+    class AbfTag
     {
-        public double timeSec;
-        public double timeMin;
-        public double timeSweep;
-        public double time;
-        public string comment;
+        public int tagTime { get; }
+        public string comment { get; }
+        public double tagTimeMult { get; }
+        public double sweepLengthSec { get; }
+        public double tagTimeSec { get { return tagTime * tagTimeMult; } }
+        public double tagTimeMin { get { return tagTimeSec / 60.0; } }
+        public double tagTimeSweep { get { return tagTimeSec / sweepLengthSec; } }
+        public string description { get { return string.Format("{0} @ {1:0.00} min (sweep {2:0})", comment, tagTimeMin, tagTimeSweep); } }
+
+        public AbfTag(int tagTime, string comment, double tagTimeMult, double sweepLengthSec)
+        {
+            this.tagTime = tagTime;
+            this.comment = comment;
+            this.tagTimeMult = tagTimeMult;
+            this.sweepLengthSec = sweepLengthSec;
+        }
+
     }
 
     class AbfTagEdit
@@ -34,7 +46,7 @@ namespace ABFtagEditor
         }
 
         // Tags
-        public List<tag> tags = new List<tag>();
+        public List<AbfTag> tags = new List<AbfTag>();
 
         // ABF properties
         public string abfPath;
@@ -123,7 +135,7 @@ namespace ABFtagEditor
                 // protocolSection is a 4-byte float 14 bytes after the start of the protocolSection
                 int protocolSectionFirstBlock = BytesToInt(FileReadBytes(4, 76));
                 double fSynchTimeUnit = BytesToFloat(FileReadBytes(4, protocolSectionFirstBlock * BLOCKSIZE + 14));
-                
+
                 for (int tagIndex = 0; tagIndex < tagCount; tagIndex++)
                 {
                     int tagBytePos = tagSectionFirstBlock * BLOCKSIZE + tagIndex * tagSizeBytes;
