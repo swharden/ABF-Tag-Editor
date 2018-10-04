@@ -41,10 +41,10 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
+            this.btnLaunch = new System.Windows.Forms.Button();
+            this.btnBackup = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
@@ -160,41 +160,42 @@
             this.lblStatus.Size = new System.Drawing.Size(129, 17);
             this.lblStatus.Text = "Load an ABF to begin...";
             // 
-            // button11
+            // btnSave
             // 
-            this.button11.Location = new System.Drawing.Point(218, 39);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(108, 23);
-            this.button11.TabIndex = 21;
-            this.button11.Text = "Save Changes";
-            this.button11.UseVisualStyleBackColor = true;
+            this.btnSave.Location = new System.Drawing.Point(218, 39);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(108, 23);
+            this.btnSave.TabIndex = 21;
+            this.btnSave.Text = "Save Changes";
+            this.btnSave.UseVisualStyleBackColor = true;
             // 
-            // button12
+            // btnLoad
             // 
-            this.button12.Location = new System.Drawing.Point(6, 39);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(83, 23);
-            this.button12.TabIndex = 20;
-            this.button12.Text = "Load ABF";
-            this.button12.UseVisualStyleBackColor = true;
+            this.btnLoad.Location = new System.Drawing.Point(6, 39);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(83, 23);
+            this.btnLoad.TabIndex = 20;
+            this.btnLoad.Text = "Load ABF";
+            this.btnLoad.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnLaunch
             // 
-            this.button1.Location = new System.Drawing.Point(332, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 23);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "Launch in ClampFit";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLaunch.Location = new System.Drawing.Point(332, 39);
+            this.btnLaunch.Name = "btnLaunch";
+            this.btnLaunch.Size = new System.Drawing.Size(126, 23);
+            this.btnLaunch.TabIndex = 22;
+            this.btnLaunch.Text = "Launch in ClampFit";
+            this.btnLaunch.UseVisualStyleBackColor = true;
+            this.btnLaunch.Click += new System.EventHandler(this.btnLaunch_Click);
             // 
-            // button2
+            // btnBackup
             // 
-            this.button2.Location = new System.Drawing.Point(95, 39);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(117, 23);
-            this.button2.TabIndex = 24;
-            this.button2.Text = "Create Backup ABF";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnBackup.Location = new System.Drawing.Point(95, 39);
+            this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Size = new System.Drawing.Size(117, 23);
+            this.btnBackup.TabIndex = 24;
+            this.btnBackup.Text = "Create Backup ABF";
+            this.btnBackup.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
@@ -328,10 +329,10 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.button12);
-            this.groupBox1.Controls.Add(this.button11);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btnLoad);
+            this.groupBox1.Controls.Add(this.btnSave);
+            this.groupBox1.Controls.Add(this.btnLaunch);
+            this.groupBox1.Controls.Add(this.btnBackup);
             this.groupBox1.Location = new System.Drawing.Point(9, 29);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(464, 68);
@@ -413,10 +414,10 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnLaunch;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Button btnBackup;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

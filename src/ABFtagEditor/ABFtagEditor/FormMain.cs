@@ -21,10 +21,12 @@ namespace ABFtagEditor
             formConsole.TextSet("wow, that was hard");
         }
 
+        AbfTagEdit abftag;
         private void Form1_Load(object sender, EventArgs e)
         {
             string demoABF = @"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\16d05007_vc_tags.abf";
-            AbfTagEdit abftag = new AbfTagEdit(demoABF);
+            //string demoABF = @"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\abf1_with_tags.abf";
+            abftag = new AbfTagEdit(demoABF);
             formConsole.TextSet(abftag.GetLog(true));
         }
 
@@ -37,6 +39,11 @@ namespace ABFtagEditor
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnLaunch_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(abftag.abfPath);
         }
     }
 }
