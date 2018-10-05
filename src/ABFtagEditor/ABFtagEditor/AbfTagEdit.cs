@@ -8,11 +8,11 @@ namespace ABFtagEditor
 {
     class AbfTag
     {
-        public int tagTime { get; }
-        public string comment { get; }
+        public int tagTime { get; private set; }
+        public string comment { get; set; }
         public double tagTimeMult { get; }
         public double sweepLengthSec { get; }
-        public double tagTimeSec { get { return tagTime * tagTimeMult; } }
+        public double tagTimeSec { get { return tagTime * tagTimeMult; } set { tagTime = (int)(value / tagTimeMult); } }
         public double tagTimeMin { get { return tagTimeSec / 60.0; } }
         public double tagTimeSweep { get { return tagTimeSec / sweepLengthSec; } }
         public string description { get { return string.Format("{0} @ {1:0.00} min (sweep {2:0})", comment, tagTimeMin, tagTimeSweep); } }
@@ -23,6 +23,16 @@ namespace ABFtagEditor
             this.comment = comment;
             this.tagTimeMult = tagTimeMult;
             this.sweepLengthSec = sweepLengthSec;
+        }
+
+        public void SetComment(string comment)
+        {
+            this.comment = comment;
+        }
+
+        public void SetTimeSec(double timeSec)
+        {
+            tagTime = (int)(timeSec / tagTimeMult);
         }
 
     }
@@ -92,6 +102,9 @@ namespace ABFtagEditor
             Log($"This file is of the ABF{abfVersionMajor} format.");
         }
 
+        public double abfTotalLengthSec;
+        public double abfSweepLengthSec;
+        public int abfSweepCount;
         private void ReadTags()
         {
             if (abfVersionMajor == 1)
@@ -106,8 +119,33 @@ namespace ABFtagEditor
                 int lTagSectionPtr = BytesToInt(FileReadBytes(4, 44));
                 int lNumTagEntries = BytesToInt(FileReadBytes(4, 48));
                 double fADCSampleInterval = BytesToFloat(FileReadBytes(4, 122));
+                double tagTimeMult = fADCSampleInterval / 1e6;
+                Log($"fADCSampleInterval: {fADCSampleInterval}");
 
-                Log($"{lNumTagEntries} tags found in ABF file");
+                // to get the sweep lenght, we need to know a lot of things:
+                double dataRate = 1e6 / fADCSampleInterval;
+                Log($"dataRate: {dataRate}");
+
+                // lActualAcqLength (4-byte signed int @ byte 10)
+                int dataPointCount = BytesToInt(FileReadBytes(4, 10));
+                Log($"dataPointCount: {dataPointCount}");
+
+                // lActualEpisodes (4-byte signed int @ byte 16)
+                int sweepCount = BytesToInt(FileReadBytes(4, 16));
+                abfSweepCount = sweepCount;
+                Log($"sweepCount: {sweepCount}");
+
+                // nADCNumChannels (2-byte signed int @ byte 120)
+                int channelCount = BytesToInt(FileReadBytes(2, 120));
+                Log($"channelCount: {channelCount}");
+
+                // now you can claculate sweep length in seconds
+                abfTotalLengthSec = dataPointCount / channelCount / dataRate;
+                Log($"abfTotalLengthSec: {abfTotalLengthSec}");
+                abfSweepLengthSec = dataPointCount / sweepCount / channelCount / dataRate;
+                Log($"sweepLengthSec: {abfSweepLengthSec}");
+
+                // loop across the tags and add them to the list
                 int tagLengthBytes = 64;
                 for (int tagIndex = 0; tagIndex < lNumTagEntries; tagIndex++)
                 {
@@ -116,8 +154,9 @@ namespace ABFtagEditor
                     int lTagTime = BytesToInt(FileReadBytes(4));
                     string sComment = BytesToString(FileReadBytes(56)).Trim();
                     int nTagType = BytesToInt(FileReadBytes(2));
-                    double tagTimeSec = lTagTime * fADCSampleInterval / 1e6;
+                    double tagTimeSec = lTagTime * tagTimeMult;
                     Log($"Tag #{tagIndex + 1}: type {nTagType}, time {lTagTime} ({tagTimeSec} sec), comment: \"{sComment}\"");
+                    tags.Add(new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec));
                 }
             }
             else if (abfVersionMajor == 2)
@@ -129,13 +168,44 @@ namespace ABFtagEditor
                 int tagSectionFirstBlock = BytesToInt(FileReadBytes(4));
                 int tagSizeBytes = BytesToInt(FileReadBytes(4));
                 int tagCount = BytesToInt(FileReadBytes(4));
-                Log($"{tagCount} tags found in ABF file");
 
                 // read protocolSection (which contains fSynchTimeUnit) needed to convert tagTime to seconds
                 // protocolSection is a 4-byte float 14 bytes after the start of the protocolSection
                 int protocolSectionFirstBlock = BytesToInt(FileReadBytes(4, 76));
                 double fSynchTimeUnit = BytesToFloat(FileReadBytes(4, protocolSectionFirstBlock * BLOCKSIZE + 14));
+                double tagTimeMult = fSynchTimeUnit / 1e6;
 
+                // to determine sweep length, we actually need to know a few things:
+                // the data point count is the third value from the section map of the DataSection
+                // this is a 4-bit uint32 at byte position 236+4+4
+                int dataPointCount = BytesToInt(FileReadBytes(4, 236 + 4 + 4));
+                Log($"dataPointCount: {dataPointCount}");
+
+                // sweep count is lActualEpisodes from the header (a uInt32 at byte 12)
+                int sweepCount = BytesToInt(FileReadBytes(4, 12));
+                abfSweepCount = sweepCount;
+                Log($"sweepCount: {sweepCount}");
+
+                // channel count comes from the number of sections in the ADCSection map (byte 92+4+4)
+                int channelCount = BytesToInt(FileReadBytes(4, 92 + 4 + 4));
+                Log($"channelCount: {channelCount}");
+
+                // fADCSequenceInterval is a 4-byte float two bytes into the protocol section
+                int protocolSectionFirstByte = BytesToInt(FileReadBytes(4, 76)) * BLOCKSIZE;
+                double fADCSequenceInterval = BytesToFloat(FileReadBytes(4, protocolSectionFirstByte + 2));
+                Log($"fADCSequenceInterval: {fADCSequenceInterval}");
+
+                // sample rate is the inverse of fADCSequenceInterval (in microseconds)
+                double dataRate = 1e6 / fADCSequenceInterval;
+                Log($"dataRate: {dataRate}");
+
+                // now you can claculate sweep length in seconds
+                abfTotalLengthSec = dataPointCount / channelCount / dataRate;
+                Log($"abfTotalLengthSec: {abfTotalLengthSec}");
+                abfSweepLengthSec = dataPointCount / sweepCount / channelCount / dataRate;
+                Log($"sweepLengthSec: {abfSweepLengthSec}");
+
+                // loop across the tags and add them to the list
                 for (int tagIndex = 0; tagIndex < tagCount; tagIndex++)
                 {
                     int tagBytePos = tagSectionFirstBlock * BLOCKSIZE + tagIndex * tagSizeBytes;
@@ -143,8 +213,9 @@ namespace ABFtagEditor
                     int lTagTime = BytesToInt(FileReadBytes(4));
                     string sComment = BytesToString(FileReadBytes(56)).Trim();
                     int nTagType = BytesToInt(FileReadBytes(2));
-                    double tagTimeSec = lTagTime * fSynchTimeUnit / 1e6;
+                    double tagTimeSec = lTagTime * tagTimeMult;
                     Log($"Tag #{tagIndex + 1}: type {nTagType}, time {lTagTime} ({tagTimeSec} sec), comment: \"{sComment}\"");
+                    tags.Add(new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec));
                 }
             }
         }
