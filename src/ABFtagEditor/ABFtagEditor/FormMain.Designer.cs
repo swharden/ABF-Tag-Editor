@@ -203,6 +203,7 @@
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(452, 20);
             this.tbComment.TabIndex = 0;
+            this.tbComment.TextChanged += new System.EventHandler(this.tbComment_TextChanged);
             // 
             // nudMin
             // 
@@ -216,6 +217,7 @@
             0,
             0,
             131072});
+            this.nudMin.ValueChanged += new System.EventHandler(this.nudMin_ValueChanged);
             // 
             // label2
             // 
@@ -242,10 +244,10 @@
             0,
             0,
             0});
+            this.nudSec.ValueChanged += new System.EventHandler(this.nudSec_ValueChanged);
             // 
             // nudSweep
             // 
-            this.nudSweep.DecimalPlaces = 1;
             this.nudSweep.Location = new System.Drawing.Point(158, 34);
             this.nudSweep.Maximum = new decimal(new int[] {
             999,
@@ -260,6 +262,7 @@
             0,
             0,
             0});
+            this.nudSweep.ValueChanged += new System.EventHandler(this.nudSweep_ValueChanged);
             // 
             // label3
             // 

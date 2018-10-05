@@ -22,40 +22,46 @@ namespace ABFtagEditor
         }
 
         AbfTagEdit abftag;
-        List<AbfTag> tags = new List<AbfTag>();
         private void Form1_Load(object sender, EventArgs e)
         {
             //string demoABF = @"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\16d05007_vc_tags.abf";
-            //string demoABF = @"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\abf1_with_tags.abf";
-            //abftag = new AbfTagEdit(demoABF);
-            //formConsole.TextSet(abftag.GetLog(true));
-            CreateDemoTags();
-            UpdateGuiFromTags();
+            string demoABF = @"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\abf1_with_tags.abf";
+            //string demoABF = @"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\File_axon_7.abf";
+            abftag = new AbfTagEdit(demoABF);
+            UpdateGui();
         }
 
-        private void CreateDemoTags()
+        private void UpdateGui()
         {
-            // make some fake tags to practice with
-            tags.Clear();
-            tags.Add(new AbfTag(7000000, "TTX started", 1 / 80000.0, 2));
-            tags.Add(new AbfTag(13918208, "TGOT added", 1 / 80000.0, 2));
-            tags.Add(new AbfTag(23588864, "TGOT removed", 1 / 80000.0, 2));
+            // update debug console
+            formConsole.TextSet(abftag.GetLog());
 
-            foreach (AbfTag tag in tags)
+            // set NUD limits to reflect ABF data
+            nudMin.Maximum = (decimal)(abftag.abfTotalLengthSec / 60.0);
+            nudSec.Maximum = (decimal)(abftag.abfTotalLengthSec);
+            nudSweep.Maximum = (decimal)(abftag.abfSweepCount);
+
+            // update combobox list of tags
+            if (cbTags.Items.Count == abftag.tags.Count)
             {
-                Console.WriteLine($"{tag.comment} @ {tag.tagTimeMin} min (sweep {tag.tagTimeSweep})");
+                // same number of items in the list, so just update the text
+                for (int i = 0; i < abftag.tags.Count; i++)
+                {
+                    string tagLine = $"Tag {i + 1}: {abftag.tags[i].description}";
+                    cbTags.Items[i] = tagLine;
+                }
             }
-
-        }
-
-        private void UpdateGuiFromTags()
-        {
-            cbTags.Items.Clear();
-            for (int i=0; i<tags.Count; i++)
+            else
             {
-                cbTags.Items.Add($"Tag {i+1}: {tags[i].description}");
+                // different number of tags, so rebuild the list from scratch
+                cbTags.Items.Clear();
+                for (int i = 0; i < abftag.tags.Count; i++)
+                {
+                    string tagLine = $"Tag {i + 1}: {abftag.tags[i].description}";
+                    cbTags.Items.Add(tagLine);
+                }
+                cbTags.SelectedIndex = 0;
             }
-            cbTags.SelectedIndex = 0;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,10 +83,48 @@ namespace ABFtagEditor
         private void cbTags_SelectedIndexChanged(object sender, EventArgs e)
         {
             int i = cbTags.SelectedIndex;
-            nudMin.Value = (decimal) tags[i].tagTimeMin;
-            nudSec.Value = (decimal) tags[i].tagTimeSec;
-            nudSweep.Value = (decimal)tags[i].tagTimeSweep;
-            tbComment.Text = tags[i].comment;
+            try
+            {
+                nudMin.Value = (decimal)abftag.tags[i].tagTimeMin;
+                nudSec.Value = (decimal)abftag.tags[i].tagTimeSec;
+                nudSweep.Value = (decimal)abftag.tags[i].tagTimeSweep;
+                tbComment.Text = abftag.tags[i].comment;
+            } catch
+            {
+                Console.WriteLine("EXCEPTION");
+            }
+        }
+
+        private void tbComment_TextChanged(object sender, EventArgs e)
+        {
+            if (abftag == null) return;
+            abftag.tags[cbTags.SelectedIndex].SetComment(tbComment.Text);
+            UpdateGui();
+        }
+
+        private void nudSec_ValueChanged(object sender, EventArgs e)
+        {
+            if (abftag == null) return;
+            double timeSec = (double)(nudSec.Value);
+            abftag.tags[cbTags.SelectedIndex].SetTimeSec(timeSec);
+            UpdateGui();
+        }
+
+        private void nudMin_ValueChanged(object sender, EventArgs e)
+        {
+            if (abftag == null) return;
+            double timeSec = (double)(nudMin.Value * 60);
+            abftag.tags[cbTags.SelectedIndex].SetTimeSec(timeSec);
+            UpdateGui();
+        }
+
+        private void nudSweep_ValueChanged(object sender, EventArgs e)
+        {
+            if (abftag == null) return;
+            double sweepLengthSec = abftag.tags[0].sweepLengthSec;
+            double timeSec = (double)nudSweep.Value * sweepLengthSec;
+            abftag.tags[cbTags.SelectedIndex].SetTimeSec(timeSec);
+            UpdateGui();
         }
     }
 }
