@@ -133,6 +133,11 @@ namespace ABFtagEditor
                 // lActualEpisodes (4-byte signed int @ byte 16)
                 int sweepCount = BytesToInt(FileReadBytes(4, 16));
                 abfSweepCount = sweepCount;
+
+                // compensate for gap-free files
+                if (sweepCount == 0)
+                    sweepCount = 1;
+
                 Log($"sweepCount: {sweepCount}");
 
                 // nADCNumChannels (2-byte signed int @ byte 120)
@@ -184,6 +189,11 @@ namespace ABFtagEditor
                 // sweep count is lActualEpisodes from the header (a uInt32 at byte 12)
                 int sweepCount = BytesToInt(FileReadBytes(4, 12));
                 abfSweepCount = sweepCount;
+
+                // compensate for gap-free files
+                if (sweepCount == 0)
+                    sweepCount = 1;
+
                 Log($"sweepCount: {sweepCount}");
 
                 // channel count comes from the number of sections in the ADCSection map (byte 92+4+4)
