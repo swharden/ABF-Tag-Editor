@@ -43,7 +43,7 @@ namespace ABFtagEditor
 
         // version info (update this manually)
         private byte versionMajor = 1;
-        private byte versionMinor = 0;
+        private byte versionMinor = 1;
         private byte versionBugFix = 0;
 
         private const int BLOCKSIZE = 512;
