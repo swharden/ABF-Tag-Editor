@@ -74,7 +74,7 @@ namespace ABFtagEditor
             this.abfPath = abfPath;
 
             if (abfPath == null)
-                throw new Exception("null abfPath");
+                return;
 
             else if (!System.IO.File.Exists(abfPath))
                 throw new Exception($"file does not exist: {abfPath}");
@@ -228,6 +228,17 @@ namespace ABFtagEditor
                     tags.Add(new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec));
                 }
             }
+        }
+
+        /// <summary>
+        /// Write the present tag list into the file
+        /// </summary>
+        public void WriteTags()
+        {
+            Log("Writing tags to file...");
+            //FileOpen();
+            //FileClose();
+            Log("ABF file writing complete!");
         }
 
         ////////////////////////////////////////////////////////////////////////

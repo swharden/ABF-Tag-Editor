@@ -162,12 +162,14 @@
             // 
             // btnSave
             // 
+            this.btnSave.Enabled = false;
             this.btnSave.Location = new System.Drawing.Point(218, 39);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(108, 23);
             this.btnSave.TabIndex = 21;
             this.btnSave.Text = "Save Changes";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnLoad
             // 
@@ -177,9 +179,11 @@
             this.btnLoad.TabIndex = 20;
             this.btnLoad.Text = "Load ABF";
             this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // btnLaunch
             // 
+            this.btnLaunch.Enabled = false;
             this.btnLaunch.Location = new System.Drawing.Point(332, 39);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(126, 23);
@@ -190,15 +194,17 @@
             // 
             // btnBackup
             // 
+            this.btnBackup.Enabled = false;
             this.btnBackup.Location = new System.Drawing.Point(95, 39);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(117, 23);
             this.btnBackup.TabIndex = 24;
             this.btnBackup.Text = "Create Backup ABF";
-            this.btnBackup.UseVisualStyleBackColor = true;
+            this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
             // 
             // tbComment
             // 
+            this.tbComment.Enabled = false;
             this.tbComment.Location = new System.Drawing.Point(6, 75);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(452, 20);
@@ -208,6 +214,7 @@
             // nudMin
             // 
             this.nudMin.DecimalPlaces = 2;
+            this.nudMin.Enabled = false;
             this.nudMin.Location = new System.Drawing.Point(6, 34);
             this.nudMin.Name = "nudMin";
             this.nudMin.Size = new System.Drawing.Size(70, 20);
@@ -230,6 +237,7 @@
             // 
             // nudSec
             // 
+            this.nudSec.Enabled = false;
             this.nudSec.Location = new System.Drawing.Point(82, 34);
             this.nudSec.Maximum = new decimal(new int[] {
             1000,
@@ -248,6 +256,7 @@
             // 
             // nudSweep
             // 
+            this.nudSweep.Enabled = false;
             this.nudSweep.Location = new System.Drawing.Point(158, 34);
             this.nudSweep.Maximum = new decimal(new int[] {
             999,
@@ -313,12 +322,12 @@
             // 
             // cbTags
             // 
+            this.cbTags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTags.FormattingEnabled = true;
             this.cbTags.Location = new System.Drawing.Point(6, 19);
             this.cbTags.Name = "cbTags";
             this.cbTags.Size = new System.Drawing.Size(347, 21);
             this.cbTags.TabIndex = 7;
-            this.cbTags.Text = "6.34 min - some drug added 200 nM";
             this.cbTags.SelectedIndexChanged += new System.EventHandler(this.cbTags_SelectedIndexChanged);
             // 
             // label1
