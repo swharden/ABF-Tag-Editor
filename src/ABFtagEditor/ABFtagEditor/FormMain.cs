@@ -46,6 +46,7 @@ namespace ABFtagEditor
                 nudSec.Value = 0;
                 nudSweep.Enabled = false;
                 nudSweep.Value = 0;
+                nudTagTime.Value = 0;
                 tbComment.Enabled = false;
                 tbComment.Text = "";
                 return;
@@ -154,6 +155,7 @@ namespace ABFtagEditor
                 nudMin.Value = (decimal)abftag.tags[i].tagTimeMin;
                 nudSec.Value = (decimal)abftag.tags[i].tagTimeSec;
                 nudSweep.Value = (decimal)abftag.tags[i].tagTimeSweep;
+                nudTagTime.Value = (decimal)abftag.tags[i].tagTime;
                 tbComment.Text = abftag.tags[i].comment;
             }
             catch

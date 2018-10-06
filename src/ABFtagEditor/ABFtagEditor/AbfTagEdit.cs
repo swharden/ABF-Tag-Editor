@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace ABFtagEditor
 {
+
     class AbfTag
     {
         public int tagTime { get; private set; }
@@ -18,12 +19,27 @@ namespace ABFtagEditor
         public double tagTimeSweep { get { return tagTimeSec / sweepLengthSec; } }
         public string description { get { return string.Format("{0} @ {1:0.00} min (sweep {2:0})", comment, tagTimeMin, tagTimeSweep); } }
 
-        public AbfTag(int tagTime, string comment, double tagTimeMult, double sweepLengthSec)
+        public int pos_map_block { get; }
+        public int pos_map_itemCount { get; }
+        public int pos_tag_time { get; }
+        public int pos_tag_comment { get; }
+        public int tagItemSize { get; }
+        public int commentByteCount;
+
+        public AbfTag(int tagTime, string comment, double tagTimeMult, double sweepLengthSec,
+            int pos_map_block, int tagItemSize, int pos_map_itemCount, int commentByteCount,
+            int pos_tag_time, int pos_tag_comment)
         {
             this.tagTime = tagTime;
             this.comment = comment;
             this.tagTimeMult = tagTimeMult;
             this.sweepLengthSec = sweepLengthSec;
+            this.pos_map_block = pos_map_block;
+            this.tagItemSize = tagItemSize;
+            this.pos_map_itemCount = pos_map_itemCount;
+            this.commentByteCount = commentByteCount;
+            this.pos_tag_time = pos_tag_time;
+            this.pos_tag_comment = pos_tag_comment;
         }
 
         public void SetComment(string comment)
@@ -34,6 +50,18 @@ namespace ABFtagEditor
         public void SetTimeSec(double timeSec)
         {
             tagTime = (int)(timeSec / tagTimeMult);
+        }
+
+        public string Info()
+        {
+            string info = "";
+            info += $"File position indicating first block: {pos_map_block}\n";
+            info += $"File position indicating tag count: {pos_map_itemCount}\n";
+            info += $"Tag item size (bytes): {tagItemSize}\n";
+            info += $"Tag string size (bytes): {commentByteCount}\n";
+            info += $"This tag byte location of lTagTime: {pos_tag_time}\n";
+            info += $"This tag byte location of sComment: {pos_tag_comment}\n";
+            return info.Trim();
         }
 
     }
@@ -117,8 +145,14 @@ namespace ABFtagEditor
                 // this makes each tag 64 bytes long.
                 // fADCSampleInterval is needed to convert lTagTime to seconds
 
-                int lTagSectionPtr = BytesToInt(FileReadBytes(4, 44));
-                int lNumTagEntries = BytesToInt(FileReadBytes(4, 48));
+                // the file has certain locations which store byte positions of tag info
+                int pos_map_block = 44;
+                int pos_map_itemCount = 48;
+                int tagSizeInFile = 64;
+                int commentByteCount = 56;
+
+                int lTagSectionPtr = BytesToInt(FileReadBytes(4, pos_map_block));
+                int lNumTagEntries = BytesToInt(FileReadBytes(4, pos_map_itemCount));
                 double fADCSampleInterval = BytesToFloat(FileReadBytes(4, 122));
                 double tagTimeMult = fADCSampleInterval / 1e6;
                 Log($"fADCSampleInterval: {fADCSampleInterval}");
@@ -152,27 +186,38 @@ namespace ABFtagEditor
                 Log($"sweepLengthSec: {abfSweepLengthSec}");
 
                 // loop across the tags and add them to the list
-                int tagLengthBytes = 64;
                 for (int tagIndex = 0; tagIndex < lNumTagEntries; tagIndex++)
                 {
-                    int tagBytePos = lTagSectionPtr * BLOCKSIZE + tagIndex * tagLengthBytes;
+                    int tagBytePos = lTagSectionPtr * BLOCKSIZE + tagIndex * tagSizeInFile;
                     fs.Seek(tagBytePos, System.IO.SeekOrigin.Begin);
                     int lTagTime = BytesToInt(FileReadBytes(4));
-                    string sComment = BytesToString(FileReadBytes(56)).Trim();
+                    string sComment = BytesToString(FileReadBytes(commentByteCount)).Trim();
                     int nTagType = BytesToInt(FileReadBytes(2));
                     if (nTagType != 1)
                         MessageBox.Show($"Tag {tagIndex + 1} is not a comment tag. It could be damaged by this program.", "WARNING!!!");
                     double tagTimeSec = lTagTime * tagTimeMult;
+                    AbfTag tag = new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec,
+                        pos_map_block, tagSizeInFile, pos_map_itemCount, commentByteCount,
+                        tagBytePos, tagBytePos + 4);
+                    tags.Add(tag);
+                    if (tagIndex == 0)
+                        Log(tag.Info());
                     Log($"Tag #{tagIndex + 1}: type {nTagType}, time {lTagTime} ({tagTimeSec} sec), comment: \"{sComment}\"");
-                    tags.Add(new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec));
                 }
             }
             else if (abfVersionMajor == 2)
             {
                 // READING TAGS IN ABF2 FILES:
+
+                // the file has certain locations which store byte positions of tag info
+                int pos_map_block = 252;
+                int pos_tagSizeInFile = pos_map_block + 4;
+                int pos_map_itemCount = pos_map_block + 8;
+                int commentByteCount = 56;
+
                 // Read the tagSection to get the () 
                 // tagSection information is at byte 252. It contains (4-byte ints): position, itemSize, and itemCount
-                fs.Seek(252, System.IO.SeekOrigin.Begin);
+                fs.Seek(pos_map_block, System.IO.SeekOrigin.Begin);
                 int tagSectionFirstBlock = BytesToInt(FileReadBytes(4));
                 int tagSizeBytes = BytesToInt(FileReadBytes(4));
                 int tagCount = BytesToInt(FileReadBytes(4));
@@ -224,13 +269,18 @@ namespace ABFtagEditor
                     int tagBytePos = tagSectionFirstBlock * BLOCKSIZE + tagIndex * tagSizeBytes;
                     fs.Seek(tagBytePos, System.IO.SeekOrigin.Begin);
                     int lTagTime = BytesToInt(FileReadBytes(4));
-                    string sComment = BytesToString(FileReadBytes(56)).Trim();
+                    string sComment = BytesToString(FileReadBytes(commentByteCount)).Trim();
                     int nTagType = BytesToInt(FileReadBytes(2));
                     if (nTagType != 1)
                         MessageBox.Show($"Tag {tagIndex + 1} is not a comment tag. It could be damaged by this program.", "WARNING!!!");
                     double tagTimeSec = lTagTime * tagTimeMult;
+                    AbfTag tag = new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec,
+                        pos_map_block, tagSizeBytes, pos_map_itemCount, commentByteCount,
+                        tagBytePos, tagBytePos + 4);
+                    tags.Add(tag);
+                    if (tagIndex == 0)
+                        Log(tag.Info());
                     Log($"Tag #{tagIndex + 1}: type {nTagType}, time {lTagTime} ({tagTimeSec} sec), comment: \"{sComment}\"");
-                    tags.Add(new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec));
                 }
             }
         }
@@ -241,8 +291,40 @@ namespace ABFtagEditor
         public void WriteTags()
         {
             Log("Writing tags to file...");
-            //FileOpen();
-            //FileClose();
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                AbfTag tag = tags[i];
+                Log($"Writing content of tag {i + 1}");
+
+                // open file (ENTIRELY LOCAL SCOPE)
+                Log($"Opening ABF file for modification...");
+                System.IO.FileStream abfFile = System.IO.File.Open(abfPath, System.IO.FileMode.Open);
+
+                // write the tag comment
+                Log($"Preparing string of size: {tag.commentByteCount}");
+                string sComment = tag.comment.PadRight(tag.commentByteCount, ' ');
+                byte[] bytesComment = Encoding.ASCII.GetBytes(sComment);
+                Log($"comment converted to {sComment.Length} bytes");
+                Log($"Writing to byte position: {tag.pos_tag_comment} ...");
+                abfFile.Seek(tag.pos_tag_comment, System.IO.SeekOrigin.Begin);
+                abfFile.Write(bytesComment, 0, bytesComment.Length);
+                Log($"Comment modification complete.");
+
+                // write the tag location
+                Log($"Writing tag time ({tag.tagTime}) at byte position: {tag.pos_tag_time}");
+                byte[] bytesTagTime = BitConverter.GetBytes(tag.tagTime);
+                Log($"tag time converted to {bytesTagTime.Length} bytes");
+                Log($"Writing to byte position: {tag.pos_tag_time} ...");
+                abfFile.Seek(tag.pos_tag_time, System.IO.SeekOrigin.Begin);
+                abfFile.Write(bytesTagTime, 0, bytesTagTime.Length);
+                Log($"Tag time modification complete.");
+
+                // clean up
+                abfFile.Close();
+                Log($"ABF file closed.");
+            }
+
             Log("ABF file writing complete!");
         }
 

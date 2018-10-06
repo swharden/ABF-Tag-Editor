@@ -60,6 +60,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.nudTagTime = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMin)).BeginInit();
@@ -68,6 +70,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTagTime)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -210,6 +213,7 @@
             // 
             this.tbComment.Enabled = false;
             this.tbComment.Location = new System.Drawing.Point(6, 75);
+            this.tbComment.MaxLength = 56;
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(452, 20);
             this.tbComment.TabIndex = 0;
@@ -219,6 +223,11 @@
             // 
             this.nudMin.DecimalPlaces = 2;
             this.nudMin.Enabled = false;
+            this.nudMin.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.nudMin.Location = new System.Drawing.Point(6, 34);
             this.nudMin.Name = "nudMin";
             this.nudMin.Size = new System.Drawing.Size(70, 20);
@@ -373,6 +382,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.nudTagTime);
             this.groupBox3.Controls.Add(this.nudMin);
             this.groupBox3.Controls.Add(this.nudSweep);
             this.groupBox3.Controls.Add(this.label4);
@@ -387,6 +398,33 @@
             this.groupBox3.TabIndex = 33;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Comment tag editor";
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(231, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "tag time:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // nudTagTime
+            // 
+            this.nudTagTime.Enabled = false;
+            this.nudTagTime.Location = new System.Drawing.Point(234, 34);
+            this.nudTagTime.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
+            this.nudTagTime.Name = "nudTagTime";
+            this.nudTagTime.Size = new System.Drawing.Size(101, 20);
+            this.nudTagTime.TabIndex = 7;
+            this.nudTagTime.Value = new decimal(new int[] {
+            2379754,
+            0,
+            0,
+            0});
             // 
             // FormMain
             // 
@@ -416,6 +454,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTagTime)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,6 +493,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ToolStripMenuItem developerConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown nudTagTime;
     }
 }
 
