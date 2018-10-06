@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ABFtagEditor
 {
@@ -159,6 +160,8 @@ namespace ABFtagEditor
                     int lTagTime = BytesToInt(FileReadBytes(4));
                     string sComment = BytesToString(FileReadBytes(56)).Trim();
                     int nTagType = BytesToInt(FileReadBytes(2));
+                    if (nTagType != 1)
+                        MessageBox.Show($"Tag {tagIndex + 1} is not a comment tag. It could be damaged by this program.", "WARNING!!!");
                     double tagTimeSec = lTagTime * tagTimeMult;
                     Log($"Tag #{tagIndex + 1}: type {nTagType}, time {lTagTime} ({tagTimeSec} sec), comment: \"{sComment}\"");
                     tags.Add(new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec));
@@ -223,6 +226,8 @@ namespace ABFtagEditor
                     int lTagTime = BytesToInt(FileReadBytes(4));
                     string sComment = BytesToString(FileReadBytes(56)).Trim();
                     int nTagType = BytesToInt(FileReadBytes(2));
+                    if (nTagType != 1)
+                        MessageBox.Show($"Tag {tagIndex + 1} is not a comment tag. It could be damaged by this program.", "WARNING!!!");
                     double tagTimeSec = lTagTime * tagTimeMult;
                     Log($"Tag #{tagIndex + 1}: type {nTagType}, time {lTagTime} ({tagTimeSec} sec), comment: \"{sComment}\"");
                     tags.Add(new AbfTag(lTagTime, sComment, tagTimeMult, abfSweepLengthSec));
