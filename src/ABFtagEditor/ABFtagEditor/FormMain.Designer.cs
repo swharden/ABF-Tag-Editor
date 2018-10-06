@@ -95,26 +95,26 @@
             // loadABFToolStripMenuItem
             // 
             this.loadABFToolStripMenuItem.Name = "loadABFToolStripMenuItem";
-            this.loadABFToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadABFToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.loadABFToolStripMenuItem.Text = "Load ABF ...";
             this.loadABFToolStripMenuItem.Click += new System.EventHandler(this.loadABFToolStripMenuItem_Click);
             // 
             // closeABFToolStripMenuItem
             // 
             this.closeABFToolStripMenuItem.Name = "closeABFToolStripMenuItem";
-            this.closeABFToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeABFToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.closeABFToolStripMenuItem.Text = "Close ABF";
             this.closeABFToolStripMenuItem.Click += new System.EventHandler(this.closeABFToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(133, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -131,19 +131,19 @@
             // developerConsoleToolStripMenuItem
             // 
             this.developerConsoleToolStripMenuItem.Name = "developerConsoleToolStripMenuItem";
-            this.developerConsoleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.developerConsoleToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.developerConsoleToolStripMenuItem.Text = "Developer Console";
             this.developerConsoleToolStripMenuItem.Click += new System.EventHandler(this.developerConsoleToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(170, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -369,7 +369,7 @@
             this.groupBox2.Size = new System.Drawing.Size(464, 48);
             this.groupBox2.TabIndex = 32;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Select tag";
+            this.groupBox2.Text = "Select a tag to edit";
             // 
             // groupBox3
             // 
@@ -386,7 +386,7 @@
             this.groupBox3.Size = new System.Drawing.Size(464, 102);
             this.groupBox3.TabIndex = 33;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Tag time";
+            this.groupBox3.Text = "Comment tag editor";
             // 
             // FormMain
             // 
