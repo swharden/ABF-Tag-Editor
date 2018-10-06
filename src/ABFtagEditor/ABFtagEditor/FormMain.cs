@@ -230,6 +230,7 @@ namespace ABFtagEditor
             System.IO.File.Copy(abftag.abfPath, abftag.abfPath + ".backup");
             lblStatus.Text = $"Created {System.IO.Path.GetFileName(abftag.abfPath)}.backup";
             BackupButtonUpdate(false);
+            btnSave.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
