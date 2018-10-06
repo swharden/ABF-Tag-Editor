@@ -56,7 +56,7 @@
             this.btnTagAdd = new System.Windows.Forms.Button();
             this.btnTagDelete = new System.Windows.Forms.Button();
             this.cbTags = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblAbfFileName = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -95,24 +95,26 @@
             // loadABFToolStripMenuItem
             // 
             this.loadABFToolStripMenuItem.Name = "loadABFToolStripMenuItem";
-            this.loadABFToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.loadABFToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadABFToolStripMenuItem.Text = "Load ABF ...";
+            this.loadABFToolStripMenuItem.Click += new System.EventHandler(this.loadABFToolStripMenuItem_Click);
             // 
             // closeABFToolStripMenuItem
             // 
             this.closeABFToolStripMenuItem.Name = "closeABFToolStripMenuItem";
-            this.closeABFToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.closeABFToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeABFToolStripMenuItem.Text = "Close ABF";
+            this.closeABFToolStripMenuItem.Click += new System.EventHandler(this.closeABFToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(133, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -129,18 +131,19 @@
             // developerConsoleToolStripMenuItem
             // 
             this.developerConsoleToolStripMenuItem.Name = "developerConsoleToolStripMenuItem";
-            this.developerConsoleToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.developerConsoleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.developerConsoleToolStripMenuItem.Text = "Developer Console";
+            this.developerConsoleToolStripMenuItem.Click += new System.EventHandler(this.developerConsoleToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -151,6 +154,7 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 271);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(485, 22);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -330,20 +334,20 @@
             this.cbTags.TabIndex = 7;
             this.cbTags.SelectedIndexChanged += new System.EventHandler(this.cbTags_SelectedIndexChanged);
             // 
-            // label1
+            // lblAbfFileName
             // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(452, 20);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "2018_04_13_0016b_modified.abf";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAbfFileName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblAbfFileName.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbfFileName.Location = new System.Drawing.Point(6, 16);
+            this.lblAbfFileName.Name = "lblAbfFileName";
+            this.lblAbfFileName.Size = new System.Drawing.Size(452, 20);
+            this.lblAbfFileName.TabIndex = 23;
+            this.lblAbfFileName.Text = "2018_04_13_0016b_modified.abf";
+            this.lblAbfFileName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.lblAbfFileName);
             this.groupBox1.Controls.Add(this.btnLoad);
             this.groupBox1.Controls.Add(this.btnSave);
             this.groupBox1.Controls.Add(this.btnLaunch);
@@ -444,7 +448,7 @@
         private System.Windows.Forms.Button btnTagAdd;
         private System.Windows.Forms.Button btnTagDelete;
         private System.Windows.Forms.ComboBox cbTags;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblAbfFileName;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;

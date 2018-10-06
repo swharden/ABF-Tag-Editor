@@ -19,15 +19,11 @@ namespace ABFtagEditor
         {
             InitializeComponent();
             formConsole = new FormConsole();
-            formConsole.Show();
-            formConsole.TextSet("wow, that was hard");
+            formConsole.TextSet("");
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //LoadABF(@"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\abf1_with_tags.abf");
-            //LoadABF(@"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\File_axon_7.abf");
-            //LoadABF(@"C:\Users\scott\Documents\GitHub\pyABF\data\abfs\16d05007_vc_tags.abf");
             LoadABF("");
         }
 
@@ -36,9 +32,11 @@ namespace ABFtagEditor
             if (System.IO.File.Exists(abfFilePath))
             {
                 btnLaunch.Enabled = true;
+                lblAbfFileName.Text = System.IO.Path.GetFileName(abfFilePath);
             }
             else
             {
+                lblAbfFileName.Text = "";
                 btnLaunch.Enabled = false;
                 cbTags.Enabled = false;
                 cbTags.Items.Clear();
@@ -166,14 +164,14 @@ namespace ABFtagEditor
 
         private void tbComment_TextChanged(object sender, EventArgs e)
         {
-            if (abftag == null || abftag.tags.Count == 0) return;
+            if (abftag == null || abftag.tags.Count == 0 || abftag.tags.Count != cbTags.Items.Count) return;
             abftag.tags[cbTags.SelectedIndex].SetComment(tbComment.Text);
             UpdateGui();
         }
 
         private void nudSec_ValueChanged(object sender, EventArgs e)
         {
-            if (abftag == null || abftag.tags.Count == 0) return;
+            if (abftag == null || abftag.tags.Count == 0 || abftag.tags.Count != cbTags.Items.Count) return;
             double timeSec = (double)(nudSec.Value);
             abftag.tags[cbTags.SelectedIndex].SetTimeSec(timeSec);
             UpdateGui();
@@ -181,7 +179,7 @@ namespace ABFtagEditor
 
         private void nudMin_ValueChanged(object sender, EventArgs e)
         {
-            if (abftag == null || abftag.tags.Count == 0) return;
+            if (abftag == null || abftag.tags.Count == 0 || abftag.tags.Count != cbTags.Items.Count) return;
             double timeSec = (double)(nudMin.Value * 60);
             abftag.tags[cbTags.SelectedIndex].SetTimeSec(timeSec);
             UpdateGui();
@@ -189,7 +187,7 @@ namespace ABFtagEditor
 
         private void nudSweep_ValueChanged(object sender, EventArgs e)
         {
-            if (abftag == null || abftag.tags.Count == 0) return;
+            if (abftag == null || abftag.tags.Count == 0 || abftag.tags.Count != cbTags.Items.Count) return;
             double sweepLengthSec = abftag.tags[0].sweepLengthSec;
             double timeSec = (double)nudSweep.Value * sweepLengthSec;
             abftag.tags[cbTags.SelectedIndex].SetTimeSec(timeSec);
@@ -238,6 +236,29 @@ namespace ABFtagEditor
             abftag.WriteTags();
             lblStatus.Text = "ABF file saved with new tags!";
             formConsole.TextAdd(abftag.GetLog(true));
+        }
+
+        private void loadABFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnLoad_Click(null, null);
+        }
+
+        private void closeABFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadABF("");
+        }
+
+        private void developerConsoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (developerConsoleToolStripMenuItem.Checked)
+            {
+                developerConsoleToolStripMenuItem.Checked = false;
+                formConsole.Visible = false;
+            } else
+            {
+                developerConsoleToolStripMenuItem.Checked = true;
+                formConsole.Visible = true;
+            }
         }
     }
 }
