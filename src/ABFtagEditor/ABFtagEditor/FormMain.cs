@@ -33,6 +33,7 @@ namespace ABFtagEditor
             {
                 btnLaunch.Enabled = true;
                 lblAbfFileName.Text = System.IO.Path.GetFileName(abfFilePath);
+                btnTagAdd.Enabled = true;
             }
             else
             {
@@ -49,6 +50,7 @@ namespace ABFtagEditor
                 nudTagTime.Value = 0;
                 tbComment.Enabled = false;
                 tbComment.Text = "";
+                btnTagAdd.Enabled = false;
                 return;
             }
 
@@ -66,6 +68,8 @@ namespace ABFtagEditor
             }
 
             abftag = new AbfTagEdit(abfFilePath);
+            formConsole.TextClear();
+            formConsole.TextAdd(abftag.GetLog(true), false);
             UpdateGui();
             string status = $"ABF file contains {abftag.tags.Count} comment tag";
             if (abftag.tags.Count != 1)
@@ -75,9 +79,6 @@ namespace ABFtagEditor
 
         private void UpdateGui()
         {
-            // update debug console
-            formConsole.TextSet(abftag.GetLog());
-
             // set NUD limits to reflect ABF data
             nudMin.Maximum = (decimal)(abftag.abfTotalLengthSec / 60.0);
             nudSec.Maximum = (decimal)(abftag.abfTotalLengthSec);
@@ -125,6 +126,11 @@ namespace ABFtagEditor
                 }
                 cbTags.SelectedIndex = 0;
             }
+
+            if (abftag.tags.Count > 0)
+                btnTagDelete.Enabled = true;
+            else
+                btnTagDelete.Enabled = false;
         }
 
         //////////////////////////////////////////////////////////////////////////////
@@ -253,14 +259,54 @@ namespace ABFtagEditor
 
         private void developerConsoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                formConsole.Visible = true;
+            }
+            catch
+            {
+                formConsole = new FormConsole();
+            }
+
             if (developerConsoleToolStripMenuItem.Checked)
             {
                 developerConsoleToolStripMenuItem.Checked = false;
                 formConsole.Visible = false;
-            } else
+            }
+            else
             {
                 developerConsoleToolStripMenuItem.Checked = true;
                 formConsole.Visible = true;
+            }
+        }
+
+        private void btnTagAdd_Click(object sender, EventArgs e)
+        {
+            abftag.AddTag();
+            formConsole.TextAdd(abftag.GetLog(true));
+            UpdateGui();
+            cbTags.SelectedItem = cbTags.Items[cbTags.Items.Count - 1];
+        }
+
+        private void btnTagDelete_Click(object sender, EventArgs e)
+        {
+            abftag.tags.RemoveAt(cbTags.SelectedIndex);
+            UpdateGui();
+        }
+
+        private void restoreBackupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string backupFilePath = abftag.abfPath + ".backup";
+            if (System.IO.File.Exists(backupFilePath))
+            {
+                if (System.IO.File.Exists(backupFilePath))
+                    System.IO.File.Delete(abftag.abfPath);
+                System.IO.File.Copy(backupFilePath, abftag.abfPath);
+                LoadABF(abftag.abfPath);
+                lblStatus.Text = $"Restored backup copy of the ABF.";
+            } else
+            {
+                lblStatus.Text = $"Backup copy does not exist";
             }
         }
     }

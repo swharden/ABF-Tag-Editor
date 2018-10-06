@@ -62,6 +62,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nudTagTime = new System.Windows.Forms.NumericUpDown();
+            this.restoreBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMin)).BeginInit();
@@ -88,6 +89,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadABFToolStripMenuItem,
+            this.restoreBackupToolStripMenuItem,
             this.closeABFToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
@@ -98,26 +100,26 @@
             // loadABFToolStripMenuItem
             // 
             this.loadABFToolStripMenuItem.Name = "loadABFToolStripMenuItem";
-            this.loadABFToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.loadABFToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadABFToolStripMenuItem.Text = "Load ABF ...";
             this.loadABFToolStripMenuItem.Click += new System.EventHandler(this.loadABFToolStripMenuItem_Click);
             // 
             // closeABFToolStripMenuItem
             // 
             this.closeABFToolStripMenuItem.Name = "closeABFToolStripMenuItem";
-            this.closeABFToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.closeABFToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeABFToolStripMenuItem.Text = "Close ABF";
             this.closeABFToolStripMenuItem.Click += new System.EventHandler(this.closeABFToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(133, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -315,13 +317,13 @@
             // 
             // btnTagAdd
             // 
-            this.btnTagAdd.Enabled = false;
             this.btnTagAdd.Location = new System.Drawing.Point(416, 18);
             this.btnTagAdd.Name = "btnTagAdd";
             this.btnTagAdd.Size = new System.Drawing.Size(42, 23);
             this.btnTagAdd.TabIndex = 1;
             this.btnTagAdd.Text = "Add";
             this.btnTagAdd.UseVisualStyleBackColor = true;
+            this.btnTagAdd.Click += new System.EventHandler(this.btnTagAdd_Click);
             // 
             // btnTagDelete
             // 
@@ -332,6 +334,7 @@
             this.btnTagDelete.TabIndex = 2;
             this.btnTagDelete.Text = "Delete";
             this.btnTagDelete.UseVisualStyleBackColor = true;
+            this.btnTagDelete.Click += new System.EventHandler(this.btnTagDelete_Click);
             // 
             // cbTags
             // 
@@ -426,6 +429,13 @@
             0,
             0});
             // 
+            // restoreBackupToolStripMenuItem
+            // 
+            this.restoreBackupToolStripMenuItem.Name = "restoreBackupToolStripMenuItem";
+            this.restoreBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restoreBackupToolStripMenuItem.Text = "Restore backup";
+            this.restoreBackupToolStripMenuItem.Click += new System.EventHandler(this.restoreBackupToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,6 +505,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nudTagTime;
+        private System.Windows.Forms.ToolStripMenuItem restoreBackupToolStripMenuItem;
     }
 }
 
