@@ -6,6 +6,7 @@
 
 ## Download
 A click-to-run EXE version of this program can be downloaded on the [Releases](https://github.com/swharden/ABF-Tag-Editor/releases) page:
+* [ABFtagEditor.exe](https://github.com/swharden/ABF-Tag-Editor/releases/download/1.1.0/ABFtagEditor.exe) (v1.1.0)
 * [ABFtagEditor.exe](https://github.com/swharden/ABF-Tag-Editor/releases/download/1.0.0/ABFtagEditor.exe) (v1.0.0)
 
 ## Features
