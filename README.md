@@ -9,13 +9,20 @@ A click-to-run EXE version of this program can be downloaded on the [Releases](h
 * [ABFtagEditor.exe](https://github.com/swharden/ABF-Tag-Editor/releases/download/1.0.0/ABFtagEditor.exe) (v1.0.0)
 
 ## Features
-* ABF1 and ABF2 files are supported. 
-* An original ABF file backup is created automatically before an ABF is modified.
+* ABF1 and ABF2 files are supported.
+* Episodic and gap-free recordings are supported
+* The original ABF file is never modified (a backup is created automatically)
+* An original ABF file backup can be restored at any time
+* Tags can be deleted from ABF files
+* Tags can be added to files which have no tags
+* One-click loading of ABF file into ClampFit for inspection
 
 ## Limitations
 * Only comment tags are supported (not voice tags)
-* Tags can only be modified (not created or deleted)
-
+* Tag times can become distorted when
+  * gaps exist between sweeps
+  * tags are added to ABF files containing no tags
+  
 ## Technical Notes and Resources
 * The source code is fully self-contained. Although a vsABF library exists for full-featured support to read ABF file header and data, it was not used in an effort to simplify maintenance of this program. All ABF file reading and writing is performed by [AbfTagEdit.cs](src/ABFtagEditor/ABFtagEditor/AbfTagEdit.cs).
 * [pyABF](https://github.com/swharden/pyABF) - An ABF reader for Python
