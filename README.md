@@ -7,7 +7,6 @@
 ## Download
 A click-to-run EXE version of this program can be downloaded on the [Releases](https://github.com/swharden/ABF-Tag-Editor/releases) page:
 * [ABFtagEditor.exe](https://github.com/swharden/ABF-Tag-Editor/releases/download/1.1.0/ABFtagEditor.exe) (v1.1.0)
-* [ABFtagEditor.exe](https://github.com/swharden/ABF-Tag-Editor/releases/download/1.0.0/ABFtagEditor.exe) (v1.0.0)
 
 ## Features
 * ABF1 and ABF2 files are supported.
@@ -25,12 +24,6 @@ A click-to-run EXE version of this program can be downloaded on the [Releases](h
   * tags are added to ABF files containing no tags
   
 ## Technical Notes and Resources
-* The source code is fully self-contained. Although a vsABF library exists for full-featured support to read ABF file header and data, it was not used in an effort to simplify maintenance of this program. All ABF file reading and writing is performed by [AbfTagEdit.cs](src/ABFtagEditor/ABFtagEditor/AbfTagEdit.cs).
+* ABF file reading and writing is performed by [AbfTagEdit.cs](src/ABFtagEditor/ABFtagEditor/AbfTagEdit.cs) (a solution not based on external DLLs).
 * [pyABF](https://github.com/swharden/pyABF) - An ABF reader for Python
-* [vsABF](https://github.com/swharden/vsABF) - An ABF reader for Visual Studio (written in C#)
-* [Unofficial Guide to the ABF File Format](https://github.com/swharden/pyABF/tree/master/docs/advanced/abf-file-format)
-
-## Author
-Scott W Harden, D.M.D., Ph.D.\
-President & CEO\
-[Harden Technologies, LLC](https://tech.swharden.com)
+* [ABFsharp](https://github.com/swharden/ABFsharp) - An ABF reader for Visual Studio (written in C#)
